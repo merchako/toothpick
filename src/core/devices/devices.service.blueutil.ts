@@ -79,20 +79,6 @@ export default class BlueutilDevicesService extends ApplescriptDevicesService {
     }
   }
 
-  refreshDevice(mac: string): boolean {
-    try {
-      execSync(
-        `blueutil --disconnect ${mac} --wait-disconnect ${mac} 5 && blueutil --connect ${mac} --wait-connect ${mac} 5`,
-        {
-          env: this.envVars,
-        },
-      );
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   refreshBluetooth(): boolean {
     try {
       execSync(`blueutil -p 0 && blueutil -p 1`, {

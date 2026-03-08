@@ -1,10 +1,17 @@
-import { getPreferenceValues } from "@raycast/api";
 import { getDevicesService } from "src/core/devices/devices.service";
-import { showAnimatedMessage, showErrorMessage, showSuccessMessage } from "src/utils";
+import { DevicesService } from "src/core/devices/devices.service";
+import { showAnimatedMessage, showErrorMessage, showSuccessMessage, showWarningMessage } from "src/utils";
 
 export default async function refreshBluetooth() {
-  const { bluetoothBackend } = getPreferenceValues<ExtensionPreferences>();
-  const devicesService = getDevicesService(bluetoothBackend);
+  let devicesService: DevicesService;
+  try {
+    devicesService = getDevicesService("blueutil");
+  } catch {
+    await showWarningMessage(
+      "Refresh All requires blueutil. Install it with Homebrew or set Blueutil Directory in preferences.",
+    );
+    return;
+  }
 
   await showAnimatedMessage("Refreshing Bluetooth...");
   const result = devicesService?.refreshBluetooth();
