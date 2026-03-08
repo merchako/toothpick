@@ -81,9 +81,9 @@ export default class ApplescriptDevicesService implements DevicesService {
       ${disconnectScript}
 
       set targetDevice to getFirstMatchingDevice("${formattedMacAddress}")
-      set connectExitCode to connectDevice(targetDevice)
-      delay 1
       set disconnectExitCode to disconnectDevice(targetDevice)
+      delay 1
+      set connectExitCode to connectDevice(targetDevice)
 
       if connectExitCode is "0" and disconnectExitCode is "0" then
         return "0"

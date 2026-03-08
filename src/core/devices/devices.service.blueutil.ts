@@ -82,7 +82,7 @@ export default class BlueutilDevicesService extends ApplescriptDevicesService {
   refreshDevice(mac: string): boolean {
     try {
       execSync(
-        `blueutil --connect ${mac} --wait-connect ${mac} 5 && blueutil --disconnect ${mac} --wait-disconnect ${mac} 5`,
+        `blueutil --disconnect ${mac} --wait-disconnect ${mac} 5 && blueutil --connect ${mac} --wait-connect ${mac} 5`,
         {
           env: this.envVars,
         },
