@@ -7,11 +7,9 @@ export async function refreshDevice(device: Device) {
   const disconnectResult = await disconnectDevice(device);
   if (!disconnectResult) {
     await showWarningMessage("Connecting anyway…");
-  }
-  else {
+  } else {
     await showAnimatedMessage("Reconnecting...");
   }
-
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
   await connectDevice(device);
