@@ -7,7 +7,7 @@ export default async function refreshBluetooth() {
   try {
     devicesService = getDevicesService("blueutil");
   } catch {
-    await showWarningMessage(
+    await showErrorMessage(
       "Refresh All requires blueutil. Install it with Homebrew or set Blueutil Directory in preferences.",
     );
     return;

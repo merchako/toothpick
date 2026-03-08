@@ -1,5 +1,5 @@
 import { Device } from "src/core/devices/devices.model";
-import { showWarningMessage } from "src/utils";
+import { showAnimatedMessage, showWarningMessage } from "src/utils";
 import { connectDevice } from "./connect-device";
 import { disconnectDevice } from "./disconnect-device";
 
@@ -8,7 +8,11 @@ export async function refreshDevice(device: Device) {
   if (!disconnectResult) {
     await showWarningMessage("Connecting anyway…");
   }
+  else {
+    await showAnimatedMessage("Reconnecting...");
+  }
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   await connectDevice(device);
 }
