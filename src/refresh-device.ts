@@ -1,8 +1,9 @@
 import { getPreferenceValues } from "@raycast/api";
 import { ratio } from "fuzzball";
-import { refreshDevice } from "./core/devices/handlers/refresh-device";
+import { connectDevice } from "./core/devices/handlers/connect-device";
+import { disconnectDevice } from "./core/devices/handlers/disconnect-device";
 import { getDevicesService } from "./core/devices/devices.service";
-import { showErrorMessage } from "./utils";
+import { showErrorMessage, showWarningMessage } from "./utils";
 
 export default async (props: { arguments: { nameOrMacAddress: string | undefined } }) => {
   const { fuzzyRatio, bluetoothBackend } = getPreferenceValues<ExtensionPreferences>();
@@ -27,7 +28,15 @@ export default async (props: { arguments: { nameOrMacAddress: string | undefined
     );
 
     if (!device) throw new Error("Device not found");
-    await refreshDevice(device);
+
+    if (device.connected) {
+      await disconnectDevice(device);
+    } else {
+      await showWarningMessage("Device wasn't connected. Connecting it now...");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await connectDevice(device);
   } catch (error) {
     await showErrorMessage(`${error}`);
   }
