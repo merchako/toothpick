@@ -58,6 +58,45 @@ export default class ApplescriptDevicesService implements DevicesService {
     return exitCode === "0";
   }
 
+  refreshDevice(mac: string): boolean {
+    const formattedMacAddress = mac.toUpperCase().replaceAll(":", "-");
+    const connectScript = readFileSync(
+      resolve(__dirname, this._getPath("assets/scripts/connectDevice.applescript")),
+    ).toString();
+    const disconnectScript = readFileSync(
+      resolve(__dirname, this._getPath("assets/scripts/disconnectDevice.applescript")),
+    ).toString();
+    const getFirstMatchingDeviceScript = readFileSync(
+      resolve(__dirname, this._getPath("assets/scripts/getFirstMatchingDevice.applescript")),
+    ).toString();
+
+    try {
+      const result = runAppleScriptSync(`
+      use framework "IOBluetooth"
+      use scripting additions
+
+      ${getFirstMatchingDeviceScript}
+
+      ${connectScript}
+      ${disconnectScript}
+
+      set targetDevice to getFirstMatchingDevice("${formattedMacAddress}")
+      set connectExitCode to connectDevice(targetDevice)
+      delay 1
+      set disconnectExitCode to disconnectDevice(targetDevice)
+
+      if connectExitCode is "0" and disconnectExitCode is "0" then
+        return "0"
+      end if
+
+      return "1"
+      `);
+      return result === "0";
+    } catch {
+      return false;
+    }
+  }
+
   refreshBluetooth(): boolean {
     try {
       runAppleScriptSync(`
