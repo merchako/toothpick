@@ -60,11 +60,11 @@ export default class ApplescriptDevicesService implements DevicesService {
 
   refreshDevice(mac: string): boolean {
     const formattedMacAddress = mac.toUpperCase().replaceAll(":", "-");
-    const connectScript = readFileSync(
-      resolve(__dirname, this._getPath("assets/scripts/connectDevice.applescript")),
-    ).toString();
     const disconnectScript = readFileSync(
       resolve(__dirname, this._getPath("assets/scripts/disconnectDevice.applescript")),
+    ).toString();
+    const connectScript = readFileSync(
+      resolve(__dirname, this._getPath("assets/scripts/connectDevice.applescript")),
     ).toString();
     const getFirstMatchingDeviceScript = readFileSync(
       resolve(__dirname, this._getPath("assets/scripts/getFirstMatchingDevice.applescript")),
@@ -77,8 +77,8 @@ export default class ApplescriptDevicesService implements DevicesService {
 
       ${getFirstMatchingDeviceScript}
 
-      ${connectScript}
       ${disconnectScript}
+      ${connectScript}
 
       set targetDevice to getFirstMatchingDevice("${formattedMacAddress}")
       set disconnectExitCode to disconnectDevice(targetDevice)
