@@ -2,9 +2,9 @@
 
 ## [Refresh Device and Refresh All Commands] - {PR_MERGE_DATE}
 
-- Added a **Refresh** action in Manage Bluetooth Connections and new commands: **Refresh Device**, **Refresh Favorite Device #1/#2/#3**, and **Refresh All**.
-- Implemented refresh-device flow as disconnect, wait, then connect, with a warning and connect fallback when disconnect fails.
-- Made Refresh All blueutil-only and added a clear warning when blueutil is unavailable.
+- Added a **Refresh** action in Manage Bluetooth Connections which disconnects and reconnects a device.
+- Added commands: **Refresh Device**, **Refresh Favorite Device #1/#2/#3**.
+- Added command **Refresh All** (`blueutil` only).
 
 ## [Keyboard Shortcuts to Copy] - 2026-01-08
 
