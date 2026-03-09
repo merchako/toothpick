@@ -16,7 +16,7 @@ export async function refreshDevice(device: Device) {
   } else {
     await showWarningMessage("Failed to disconnect. Reconnecting anyway…");
   }
-  
+
   const connectResult = devicesService?.connectDevice(device.macAddress);
   if (connectResult) {
     await showSuccessMessage("Device connected successfully.");
