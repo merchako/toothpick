@@ -13,12 +13,11 @@ export default async function refreshBluetooth() {
     return;
   }
 
-  await showAnimatedMessage("Refreshing Bluetooth...");
-  const result = devicesService?.refreshBluetooth();
-
-  if (result) {
+  try {
+    await showAnimatedMessage("Refreshing Bluetooth...");
+    devicesService.refreshBluetooth();
     await showSuccessMessage("Bluetooth refreshed successfully");
-  } else {
-    await showErrorMessage("Failed to refresh Bluetooth");
+  } catch (error) {
+    await showErrorMessage(`Failed to refresh Bluetooth: ${error instanceof Error ? error.message : error}`);
   }
 }

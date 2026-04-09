@@ -34,7 +34,7 @@ You should now be able to connect to your device of choice via the configured co
 ## Enabling 'blueutil' backend
 
 The default 'AppleScript' Bluetooth backend works and is available out-of-the-box on modern macOS installs.  
-That said, AppleScript itself is flaky at best. Various device-specific issues popped up with no way to reproduce them.  
+That said, AppleScript itself is flaky at best. Various device-specific issues popped up with no way to reproduce them, and it gives no way to reset the Bluetooth at the hardware level.
 As a solution, Toothpick now has an opt-in Bluetooth backend based on 'blueutil'. It is more stable, faster and easy to set up.  
 
 1. Install 'blueutil' via 'brew'.
